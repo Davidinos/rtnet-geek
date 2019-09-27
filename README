@@ -1,1 +1,113 @@
 # rtnet-geek
+
+Contents
+====
+0. beaglebone-black
+1. x86_64
+2. rtnet-test
+3. contact
+
+
+0. beaglebone-black
+====
+  I ported to xenomai linux kernel 4.14.71
+the beaglebone-black rtnet drivers from
+https://github.com/G-Ray/xenomai-boneblack-rtnet-drivers
+which were written by using
+https://github.com/hiddeate2m/rtnet
+
+  The easiest way to test it is using buildroot to build
+a beaglebone-black rootfs and the arm-linux-gcc toolchain,
+then build separately the kernel image using the toolchain
+and xenomai ipipe patch.
+
+
+1. x86_64 qemu
+====
+  The kernel image bzImage and rootfs are all that one needs
+to simulate with qemu.
+  rootfs can be mounted with
+mount rootfs /media/username
+and the copy all the files needed to /root
+(the files are already copied).
+
+  To setup qemu networking,
+a) cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+iface enp2s0 inet manual
+auto br0
+iface br0 inet static
+    address 192.168.1.100
+    netmask 255.255.255.0
+    gateway 192.168.1.1
+    dns-nameserver 8.8.8.8
+    dns-nameserver 8.8.4.4
+    bridge_ports enp2s0
+    bridge_stp      off
+    bridge_maxwait  0
+    bridge_fd       0
+b) cat /etc/qemu/bridge.conf 
+allow virbr0
+allow br0
+
+  The virtual machine can be started with:
+a) If you have kvm installed:
+sudo qemu-system-x86_64 -m 1G --enable-kvm -M q35 -kernel bzImage -hda rootfs -append "console=tty1 console=ttyS0 root=/dev/sda rw" -device rtl8139,netdev=bridgeid,mac=52:54:00:11:22:33 -netdev bridge,br=br0,id=bridgeid -serial stdio
+b) Without kvm:
+sudo qemu-system-x86_64 -m 1G              -M q35 -kernel bzImage -hda rootfs -append "console=tty1 console=ttyS0 root=/dev/sda rw" -device rtl8139,netdev=bridgeid,mac=52:54:00:11:22:33 -netdev bridge,br=br0,id=bridgeid -serial stdio
+
+Note: One can copy rootfs as rootfs-2nd for example and start another rtnet virtual machine,
+but must set a unique mac address per virtual machine.
+
+
+2. rtnet-test
+====
+
+  To compile rtnet-test sources one should set the compiler path
+and the RTNet include folder in Makefile.
+Note: in beaglebone-black rtnet-test Makefile my arm-linux-gcc pathname
+contains "raspberry-pi" for historycal reasons. It has nothing to do with raspberry-pi now.
+
+  The folder on target machine /root contains rtnet-test preinstalled.
+To run tests in xenomai-rtnet, one should first load rtnet:
+/root/start_modules.sh
+Then, using rtroute, should set the pair <IP,mac> of the other target who runs rtnet:
+for example see the last line in start_modules.sh (the line with rtroute).
+
+  udp with alchemy skin
+/root/frag-ip.out -d <dest-ip> -s <size>
+where size is the packet size, for example 80 or 100 or 120.
+
+  udp with posix skin
+on one machine:
+/root/rtt-responder.out
+on the other machine
+/root/rtt-sender.out -d <dest-ip>
+
+  rtnet-tests can be stopped with CTRL-C followed by CTRL-Z
+and then writing the command: 
+fg %1
+
+  tcp was not tested. First one should uncomment the Kconfig
+TCP comment from xenomai kernel configuration and enable it, 
+then load the RTNet tcp module.
+
+  tftp-1.0 is a GNU GPLv2 tftp server and client.
+To transfer a file from host to target
+one should copy the file to /tmp/
+and start the server like this
+tftpd -d -P <port>
+From target one can use tftpc to transfer from server:
+/root/tftpc.out <host-IP> -P <port> -g <filename> -o
+From target one can use tftpc to transfer to server:
+/root/tftpc.out <host-IP> -P <port> -p <filename> -o
+
+
+3. Contact
+====
+Please provide feedback,
+Laurentiu-Cristian Duca
+laurentiu [dot] duca [at] gmail [dot] com
+
+This README document is released with CC-BY-SA license.
