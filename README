@@ -10,7 +10,7 @@ Contents
 
 0. beaglebone-black
 ====
-  I ported to xenomai linux kernel 4.14.71
+  I ported to xenomai 3.0.9 linux kernel 4.14.71
 the beaglebone-black rtnet drivers from
 https://github.com/G-Ray/xenomai-boneblack-rtnet-drivers
 which were written by using
@@ -59,8 +59,10 @@ sudo qemu-system-x86_64 -m 1G              -M q35 -kernel bzImage -hda rootfs -a
 
 Note: One can copy rootfs as rootfs-2nd for example and start another rtnet virtual machine,
 but must set a unique mac address per virtual machine.
-
-
+  
+  Login with root and empty password.
+  
+  
 2. rtnet-test
 ====
 
