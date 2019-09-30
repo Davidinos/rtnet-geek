@@ -74,8 +74,9 @@ contains "raspberry-pi" for historycal reasons. It has nothing to do with raspbe
   The folder on target machine /root contains rtnet-test preinstalled.
 To run tests in xenomai-rtnet, one should first load rtnet:
 /root/start_modules.sh
-Then (after rtifconfig has set the IP address for rteth0),
-using rtroute, one should set the partner <IP,mac>:
+Then verify that the network was properly setup (rteth0 is up and running):
+/usr/xenomai/rtifconfig -a
+Now, using rtroute, one should set the partner <IP,mac>:
 /usr/xenomai/sbin/rtroute solicit <partner-IP> dev rteth0
 or
 /usr/xenomai/sbin/rtroute add <partner-IP> <partner-MAC> dev rteth0
