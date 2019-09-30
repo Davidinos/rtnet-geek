@@ -74,6 +74,13 @@ contains "raspberry-pi" for historycal reasons. It has nothing to do with raspbe
   The folder on target machine /root contains rtnet-test preinstalled.
 To run tests in xenomai-rtnet, one should first load rtnet:
 /root/start_modules.sh
+An example of start_modules.sh (here for beaglebone-black) is:
+modprobe rt_ticpsw
+modprobe rtipv4 && modprobe rtpacket && modprobe rtudp
+modprobe rtmac
+modprobe nomac
+/usr/xenomai/sbin/rtifconfig rteth0 up 192.168.1.20
+
 Then verify that the network was properly setup (rteth0 is up and running):
 /usr/xenomai/rtifconfig -a
 Now, using rtroute, one should set the partner <IP,mac>:
