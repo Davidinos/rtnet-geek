@@ -1,6 +1,7 @@
 /*
  * 2019/09/20
- * Small modifications to Hidde Verstoep RTNet port to beaglebone-black,
+ * Small modifications to Geoffrey Bonneville
+ * and Hidde Verstoep RTNet port to beaglebone-black,
  * modifications made by Laurentiu-Cristian Duca
  * in order to compile on kernel 4.14.71
  *
@@ -489,6 +490,7 @@ int load_davinci_mdio_module(int v)
 {
 	return v;
 }
+/* Every module that calls this function will automatically load this module */
 EXPORT_SYMBOL_GPL(load_davinci_mdio_module);
 
 static const struct dev_pm_ops davinci_mdio_pm_ops = {

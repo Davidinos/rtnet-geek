@@ -1,5 +1,6 @@
 /*
- * drivers/net/phy/smsc.c
+ * Allmost identical to Hidde Verstoep RTNet port to beaglebone-black,
+ * small modifications made by Laurentiu-Cristian Duca
  *
  * Driver for SMSC PHYs
  *
@@ -222,6 +223,7 @@ int load_smsc_phy_module(int v)
 {
 	return v;
 }
+/* Every module that calls this function will automatically load this module */
 EXPORT_SYMBOL_GPL(load_smsc_phy_module);
 
 static struct phy_driver smsc_phy_driver[] = {

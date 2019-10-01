@@ -1,6 +1,7 @@
 /*
  * 2019/09/20
- * Modifications to Hidde Verstoep RTNet port to beaglebone-black,
+ * Modifications to Geoffrey Bonneville
+ * and Hidde Verstoep RTNet port to beaglebone-black,
  * modifications made by Laurentiu-Cristian Duca:
  * - use a dummy net_device as a glue between rtnet_device, 
  * phy_connect() and cpsw_adjust_link()
