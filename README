@@ -11,9 +11,9 @@ Contents
 0. beaglebone-black
 ====
   I ported to xenomai 3.0.9 linux kernel 4.14.71
-the beaglebone-black rtnet drivers from
+the beaglebone-black rtnet drivers from (Geoffrey Bonneville)
 https://github.com/G-Ray/xenomai-boneblack-rtnet-drivers
-which were written by using
+which were written by using (Hidde Verstoep)
 https://github.com/hiddeate2m/rtnet
 
   The easiest way to test it is using buildroot to build
