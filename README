@@ -102,6 +102,9 @@ on one machine:
 /root/rtt-responder.out
 on the other machine
 /root/rtt-sender.out -d <dest-ip>
+Note: rtt-responder.out from beaglebone-black has ipipe-trace test enabled
+for the recvmsg() function by using xntrace_user_start() and xntrace_user_freeze().
+I wanted to see that the test runs in xenomai domain.
 
   rtnet-tests can be stopped with CTRL-C followed by CTRL-Z
 and then writing the command: 
