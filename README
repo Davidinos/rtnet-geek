@@ -11,10 +11,12 @@ Contents
 0. beaglebone-black
 ====
   I ported to xenomai 3.0.9 linux kernel 4.14.71
-the beaglebone-black rtnet drivers from (Geoffrey Bonneville)
-https://github.com/G-Ray/xenomai-boneblack-rtnet-drivers
-which were written by using (Hidde Verstoep)
+the beaglebone-black rtnet drivers. The story is the following:
+- Hidde Verstoep port the beaglebone-drivers to linux 3.x
 https://github.com/hiddeate2m/rtnet
+- Geoffrey Bonneville port Hidde's drivers to linux 4.1
+https://github.com/G-Ray/xenomai-boneblack-rtnet-drivers
+- I ported to linux 4.14.71
 
   The easiest way to test it is using buildroot to build
 a beaglebone-black rootfs and the arm-linux-gcc toolchain,
@@ -75,7 +77,7 @@ contains "raspberry-pi" for historycal reasons. It has nothing to do with raspbe
 To run tests in xenomai-rtnet, one should first load rtnet:
 /root/start_modules.sh
 An example of start_modules.sh (here for beaglebone-black) is:
-modprobe rt_ticpsw
+modprobe rt_smsc && modprobe rt_davinci_mdio && modprobe rt_ticpsw
 modprobe rtipv4 && modprobe rtpacket && modprobe rtudp
 modprobe rtmac
 modprobe nomac
