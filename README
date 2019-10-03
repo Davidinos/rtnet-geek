@@ -133,6 +133,7 @@ From target one can use tftpc to transfer to server:
 /usr/xenomai/sbin/rtifconfig rteth0 up 192.168.1.30
 /usr/xenomai/sbin/nomaccfg rteth0 attach
 ifconfig vnic0 up 192.168.1.30
+/root/S50dropbear restart
 And now from another rtnet station:
 ping 192.168.1.30
 ssh root@192.168.1.30
