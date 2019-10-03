@@ -2,13 +2,13 @@
 
 Contents
 ====
-0. beaglebone-black
-1. x86_64 qemu
-2. rtnet-test
-3. contact
+1. beaglebone-black
+2. x86_64 qemu
+3. rtnet-test
+4. contact
 
 
-0. beaglebone-black
+1. beaglebone-black
 ====
   I ported to xenomai 3.0.9 linux kernel 4.14.71
 the beaglebone-black rtnet drivers. The story is the following:
@@ -24,7 +24,7 @@ then build separately the kernel image using the toolchain
 and xenomai ipipe patch.
 
 
-1. x86_64 qemu
+2. x86_64 qemu
 ====
   The kernel image bzImage and rootfs are all that one needs
 to simulate with qemu.
@@ -62,10 +62,10 @@ sudo qemu-system-x86_64 -m 1G              -M q35 -kernel bzImage -hda rootfs -a
 Note: One can copy rootfs as rootfs-2nd for example and start another rtnet virtual machine,
 but must set a unique mac address per virtual machine.
   
-  Login with root and empty password.
+  Login with root and password "student"
   
   
-2. rtnet-test
+3. rtnet-test
 ====
 
   To compile rtnet-test sources one should set the compiler path
@@ -94,6 +94,9 @@ then verify that it was successfully stored:
 
   rtping:
 /usr/xenomai/sbin/rtping <partner-IP>
+
+  Note: Before running the following examples one should:
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/xenomai/lib
 
   udp with alchemy skin
 /root/frag-ip.out -d <dest-ip> -s <size>
@@ -126,8 +129,16 @@ From target one can use tftpc to transfer from server:
 From target one can use tftpc to transfer to server:
 /root/tftpc.out <host-IP> -P <port> -p <filename> -o
 
+  rtnet targets can ping and ssh each other via vnic0:
+/usr/xenomai/sbin/rtifconfig rteth0 up 192.168.1.30
+/usr/xenomai/sbin/nomaccfg rteth0 attach
+ifconfig vnic0 up 192.168.1.30
+And now from another rtnet station:
+ping 192.168.1.30
+ssh root@192.168.1.30
 
-3. Contact
+
+4. Contact
 ====
 Please provide feedback,
 Laurentiu-Cristian Duca
