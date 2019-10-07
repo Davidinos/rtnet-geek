@@ -23,6 +23,9 @@ a beaglebone-black rootfs and the arm-linux-gcc toolchain,
 then build separately the kernel image using the toolchain
 and xenomai ipipe patch.
 
+  Please note that all beaglebone-black boards have a problem with the ethernet phy:
+https://wp.josh.com/2018/06/04/a-software-only-solution-to-the-vexing-beagle-bone-black-phy-issue
+
 
 2. x86_64 qemu
 ====
